@@ -1,0 +1,60 @@
+﻿body {
+    background-color: #474073;
+    min-height: 70vh;
+    padding: 2%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2E4159;
+    font-family: 'Gochi Hand', cursive;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.table tr td {
+    text-align: left;
+    padding: 0.5rem;
+    vertical-align: middle !important;
+}
+
+.checkbox-margin {
+    margin: 0 10px;
+}
+
+.btn {
+    margin-left:3px;
+}
+
+.brn-add{
+    position:sticky;
+    margin:2% 0;
+    
+}
+.container {
+    width: 100%;
+    height: auto;
+    min-height: 500px;
+    max-width: 1200px;
+    min-width: 250px;
+    background: #8F8EBF;
+    background-size: 25px 25px;
+    border-radius: 20px;
+    box-shadow: 4px 3px 7px 2px #00000040;
+    padding: 1rem;
+    margin: 1rem;
+    box-sizing: border-box;
+}
+
+.date-error{
+    font-size: 80%;    
+}

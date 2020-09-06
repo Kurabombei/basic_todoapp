@@ -1,0 +1,122 @@
+﻿<section class="container">
+    <h1>To-Do list</h1>
+    <app-mat-spinner-overlay *ngIf="'default' | swIsLoading | async" overlay="true">
+    </app-mat-spinner-overlay>
+    <table *ngIf="tableMode; else create" class="table table-hover table-borderless">
+        <thead class=" ">
+            <tr>
+                <td>Done</td>
+                <td>Task</td>
+                <td>Category</td>
+                <td>Deadline</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let temp_task of tasks">
+                <ng-template [ngIf]="task?.id != temp_task.id" [ngIfElse]="edit">
+                    <td>
+                        <mat-checkbox class="checkbox-margin"
+                                      [(ngModel)]="temp_task.done"
+                                      (click) ="checkTask(temp_task)">
+                        </mat-checkbox>
+                    </td>
+                    <td>{{temp_task.text}}</td>
+                    <td>{{temp_task.category}}</td>
+                    <td>{{temp_task.date | date }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" (click)="editTask(temp_task)">Modify</button>
+                        <button class="btn btn-sm btn-danger" (click)="delete(temp_task)">Delete</button>
+                    </td>
+                </ng-template>
+            </tr>
+        </tbody>
+    </table>
+    <input *ngIf="tableMode" type="button" value="Add a new task" class="btn btn-success brn-add" (click)="add()" />
+
+
+    <!--Template for modifying-->
+    <ng-template #edit>
+        <td></td>
+        <td>
+            <input type="text" [(ngModel)]="task.text" required class="form-control" />
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="task.category" required class="form-control" />
+        </td>
+        <td>
+
+            <mat-form-field>
+                <input matInput
+                       #resultPickerModel="ngModel"
+                       (ngModelChange)='dateChanged($event)'
+                       [matDatepicker]="resultPicker"
+                       [(ngModel)]="task.date"
+                       [min]="minDate"
+                       [max]="maxDate"
+                       placeholder="Pick a date">
+                <mat-datepicker-toggle matSuffix [for]="resultPicker" (click)="picker.open()"></mat-datepicker-toggle>
+                <mat-datepicker #resultPicker></mat-datepicker>
+
+                <mat-error class = "date-error" *ngIf="resultPickerModel.hasError('matDatepickerParse')">
+                    "{{resultPickerModel.getError('matDatepickerParse').text}}"
+                    is not a valid date!
+                </mat-error>
+                <mat-error class = "date-error" *ngIf="resultPickerModel.hasError('matDatepickerMin')">
+                    Minimum date should be {{minDate | date }}
+                </mat-error>
+                <mat-error class = "date-error" *ngIf="resultPickerModel.hasError('matDatepickerMax')">
+                    Maximum date should be {{maxDate | date }}
+                </mat-error>
+
+            </mat-form-field>
+        </td>
+        <td>
+            <input type="button" value="Save" (click)="save()" class="btn btn-sm btn-success" />
+            <input type="button" value="Cancel" (click)="cancel()" class="btn btn-sm btn-warning" />
+        </td>
+    </ng-template>
+
+    <!--Template for creating-->
+    <ng-template #create>
+        <div class="form-group">
+            <label>Task</label>
+            <input type="text" [(ngModel)]="task.text" required minlength="3" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <input type="text" [(ngModel)]="task.category" required minlength="3" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+
+            <mat-form-field>
+                <input matInput
+                       #resultPickerModel="ngModel"
+                       [matDatepicker]="resultPicker"
+                       [(ngModel)]="task.date"
+                       [min]="minDate"
+                       [max]="maxDate"
+                       placeholder="Pick a date">
+                <mat-datepicker-toggle matSuffix [for]="resultPicker" (click)="picker.open()"></mat-datepicker-toggle>
+                <mat-datepicker #resultPicker>
+                </mat-datepicker>
+                <mat-error *ngIf="resultPickerModel.hasError('matDatepickerParse')">
+                    <br />"{{resultPickerModel.getError('matDatepickerParse').text}}"
+                    is not a valid date!
+                </mat-error>
+                <mat-error *ngIf="resultPickerModel.hasError('matDatepickerMin')">
+                    <br />Minimum date should be {{minDate | date }}
+                </mat-error>
+                <mat-error *ngIf="resultPickerModel.hasError('matDatepickerMax')">
+                    <br />Maximum date should be {{maxDate | date }}
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+        <div>
+            <input type="button" value="Save" (click)="save()" class="btn btn-success" />
+            <input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />
+        </div>
+    </ng-template>
+</section>
