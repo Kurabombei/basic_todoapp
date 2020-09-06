@@ -44,6 +44,7 @@
         <td>
             <input type="text" [(ngModel)]="task.category" required class="form-control" />
         </td>
+        <br />
         <td>
             <mat-form-field>
                 <input matInput
@@ -59,7 +60,7 @@
 
                 <mat-error class = "date-error" *ngIf="resultPickerModel.hasError('matDatepickerParse')">
                     "{{resultPickerModel.getError('matDatepickerParse').text}}"
-                    is not a valid date!
+                    is not a valid date! Of course!
                 </mat-error>
                 <mat-error class = "date-error" *ngIf="resultPickerModel.hasError('matDatepickerMin')">
                     Minimum date should be {{minDate | date }}
